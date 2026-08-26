@@ -44,13 +44,15 @@ function displayCharacterCard(character){
     return `<li class="character-card">
         <h2>${characterName}</h2>
         <p>${_id}</p>
+        <div class="card-img-wrapper">
         <img src="${imageUrl}" alt="${characterName}" loading="lazy">
+        </div>
         <p>Films: ${films || "unknown"}</p>
         ${shortFilms ? `<p>Short Films: ${shortFilms}</p>` : ""} 
         ${videoGames ? `<p>Video Games: ${videoGames}</p>` : ""}
         </li>`;
 }
 
-// TO DO: durch die games und filme/shortfilms iterieren, hintergrund designen , überschrift header u footer, favicon
+// TO DO: durch die games und filme/shortfilms iterieren 
 // button mit load more
 //button mit search function

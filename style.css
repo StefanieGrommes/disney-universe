@@ -1,5 +1,5 @@
 :root {
-    --main-background-color: rgb(25, 0, 78);
+    --main-background-color: rgb(6, 6, 36);
 }
 
 html {
@@ -15,6 +15,25 @@ body {
     background-color: var(--main-background-color)
 }
 
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    height: 100px;
+}
+
+.header-img-wrapper {
+    height: 3em;
+    display: flex;
+}
+
+header img {
+    width: 100%;
+    object-fit: cover;
+}
+
+
 main {  
     width: 100%;
     /*min-height: calc(100dvh - 380px);*/
@@ -23,6 +42,12 @@ main {
     box-sizing: border-box;
     padding: 2 rem;
     flex: 1;  
+}
+
+h1 {
+    font-family: 'Mystery Quest', sans-serif;
+    color: white;
+    text-align: center;
 }
 
 ul {
@@ -60,16 +85,18 @@ ul {
 }
 
 .character-card h2 {
-  margin: 0;
-  font-size: 1.1rem;
+    margin: 0;
+    font-family: "Henny Penny", system-ui;
+    font-size: 1.1rem;
+    color: rgb(233, 233, 20);
 }
 
 .character-card img {
-  width: 100%;
-  max-width: 150px;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  border-radius: 0.25rem;
+    width: 100%;
+    max-width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 0.25rem;
 }
 
 .character-card p {
@@ -78,7 +105,48 @@ ul {
     color: #cfcfcf;
 }
 
- img {
+.card-img-wrapper {
+    display: flex;
+    object-fit: cover;
+    justify-content: center;
+    border-radius: 12px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+img {
     max-width: 15rem;
     width: 100%;
-  }
+}
+
+footer {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+
+.footer-link-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+}
+
+footer p {
+    color: white;
+}
+
+.footer-img-wrapper {
+    height: 16px;
+}
+
+footer img {
+    height: 100%;
+    object-fit: cover;
+}

@@ -4,12 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles/fonts.css">
+    <link rel="stylesheet" href="./styles/stars.css">
     <link rel="shortcut icon" href="./assets/icons8-death-star-96.png" type="image/x-icon">
     
     <title>My Disney Universe</title>
 </head>
 <body onload="init()">
+     <div aria-hidden class="stars-wrapper">
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
+    </div>
 <main>
+
+    <header>
+        
+        <h1>My Disney Universe</h1>
+        <div class="header-img-wrapper"><img src="./assets/icons8-death-star-100.png" alt="death-star"></div> 
+        
+    </header>
+
+   
+
     <section id="error-message">
 
     </section>
@@ -20,7 +37,10 @@
 
 </main>
    <footer>
-    <a target="_blank" href="https://icons8.com/icon/124329/death-star">Death Star</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+    <div class="footer-link-wrapper">
+        <a target="_blank" href="https://icons8.com/icon/124329/death-star">Death Star</a><p> icon by </p><a target="_blank" href="https://icons8.com">Icons8</a>
+    </div>
+    <div class="footer-img-wrapper"><img src="./assets/icons8-death-star-100.png" alt="death-star"></div>
    </footer>
 </body>
 <script src="./script.js"></script>

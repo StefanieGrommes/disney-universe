@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Henny Penny' ;
+    src: url(https://fonts.gstatic.com/s/hennypenny/v18/wXKvE3UZookzsxz_kjGSfPQtvXIZt9DS.woff2) format('woff2');
+    font-style: normal;
+    font-weight: 400;
+
+    font-family: 'Mystery Quest';
+    src: url(https://fonts.gstatic.com/s/mysteryquest/v21/-nF6OG414u0E6k0wynSGlujRLwYvDt1T39A.woff2) format('woff2');
+    font-style: normal;
+    font-weight: 400;
+}
