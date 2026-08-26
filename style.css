@@ -1,0 +1,84 @@
+:root {
+    --main-background-color: rgb(25, 0, 78);
+}
+
+html {
+    scroll-behavior: smooth;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    min-height: 100dvh;
+    margin: 0 auto;
+    padding: 0;
+    background-color: var(--main-background-color)
+}
+
+main {  
+    width: 100%;
+    /*min-height: calc(100dvh - 380px);*/
+    max-width: 1920px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 2 rem;
+    flex: 1;  
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.error-message {
+    text-align: center;
+    font-size: 1.1 rem;
+    color: rgb(224, 146, 0);
+}
+
+.character-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.character-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+}
+
+.character-card h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.character-card img {
+  width: 100%;
+  max-width: 150px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 0.25rem;
+}
+
+.character-card p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #cfcfcf;
+}
+
+ img {
+    max-width: 15rem;
+    width: 100%;
+  }
