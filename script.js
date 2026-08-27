@@ -1,12 +1,12 @@
-const BASE_URL = "https://api.disneyapi.dev/character";
+const BASE_URL = "https://api.disneyapi.dev/";
 
 function init(){
-    loadDisneyCharacters();
+    loadDisneyCharacters("character");
 }
 
-async function loadDisneyCharacters() {
+async function loadDisneyCharacters(extension) {
     try {
-        const response = await fetch(BASE_URL);
+        const response = await fetch(BASE_URL + extension);
         const data = await response.json();
         const dataList = (data.data).slice(0,20); // nur die ersten 20 Character anzeigen lassen
         console.log(dataList);
@@ -53,6 +53,18 @@ function displayCharacterCard(character){
         </li>`;
 }
 
+function searchCharacter(){
+    const inputFieldValue = document.getElementById("search-input-field").value;
+    const trueInputValue = inputFieldValue.toLowerCase().trim();
+    const list = document.getElementById("character-list");
+    list.innerHTML = "";
+    loadDisneyCharacters("character"+"?name="+trueInputValue);
+}
+
+
 // TO DO: durch die games und filme/shortfilms iterieren 
 // button mit load more
-//button mit search function
+// bei search abfrage, ob character schon geladen wurde
+// push ins Array
+// loading spinner
+// back to home button

@@ -17,15 +17,17 @@ body {
 
 header {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 24px;
-    height: 100px;
+    height: 148px;
+    padding: 1.5rem;
 }
 
 .header-img-wrapper {
     height: 3em;
     display: flex;
+    margin: 0.5rem;
 }
 
 header img {
@@ -33,14 +35,30 @@ header img {
     object-fit: cover;
 }
 
+.search-section {
+    display: flex;
+    gap: 8px;
+    height: 100%;
+    font-size: 1rem;
+}
+
+.submit-search-btn {
+   height: 100%; 
+}
+
+.search-input-field {
+    width: 220px;
+    padding: 4px;
+
+}
 
 main {  
     width: 100%;
-    /*min-height: calc(100dvh - 380px);*/
+    min-height: calc(100dvh - 276px);
     max-width: 1920px;
     margin: 0 auto;
     box-sizing: border-box;
-    padding: 2 rem;
+    padding: 2rem;
     flex: 1;  
 }
 
@@ -48,6 +66,7 @@ h1 {
     font-family: 'Mystery Quest', sans-serif;
     color: white;
     text-align: center;
+    margin: 0.5rem;
 }
 
 ul {
