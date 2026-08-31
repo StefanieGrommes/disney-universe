@@ -1,18 +1,18 @@
 const BASE_URL = "https://api.disneyapi.dev/";
 const loadMoreBtnContainer = document.getElementById("load-more-btn-container");
-let start = 0;
-let end = 20;
+let pageNumber = 1;
+let allCharacters = [];
 
 function init(){
-    loadDisneyCharacters("character", start, end);
+    loadDisneyCharacters("character", pageNumber);
+    loadAllCharacters();
 }
 
-async function loadDisneyCharacters(extension, start, end) {
+async function loadDisneyCharacters(extension, pageNumber) {
     try {
-        const response = await fetch(BASE_URL + extension);
+        const response = await fetch(BASE_URL + extension + "?page=" + pageNumber);
         const data = await response.json();
-        const dataList = (data.data).slice(start,end); // nur die ersten 20 Character anzeigen lassen
-        console.log(dataList);
+        const dataList = data.data;
         renderDisneyCharacters(dataList);
         displayLoadMoreBtn();
     } catch (error) {
@@ -63,6 +63,14 @@ function displayCharacterCard(character){
         </li>`;
 }
 
+async function loadAllCharacters(){
+    const responseAllCharacters = await fetch(BASE_URL + "character?pageSize=10000");
+    const dataAllCharacters = await responseAllCharacters.json();
+    allCharacters = dataAllCharacters.data;
+    console.log("ANzahl geladen:" , allCharacters.length);
+    console.log(dataAllCharacters.info);
+}
+
 function searchCharacter(){
     const inputFieldValue = document.getElementById("search-input-field").value;
     const trueInputValue = inputFieldValue.toLowerCase().trim();
@@ -72,14 +80,15 @@ function searchCharacter(){
 }
 
 function loadMoreCharacters(){
-    start += 20;
-    end += 20;
-    loadDisneyCharacters("character", start, end)
+    //pageNumber++;
+    //if (pageNumber > 149) {pageNumber = 1};   alte Version, besser mit ternary Operator:
+    pageNumber = pageNumber >= 149 ? 1 : pageNumber +1 ; // Weil die Prüfung jetzt vor statt nach dem Hochzählen passiert, 
+    // muss die Grenze im Vergleich um eins nach vorne verschoben werden (>  wird zu >=), damit das Verhalten gleich bleibt.
+    loadDisneyCharacters("character", pageNumber);
 }
 
 
 // TO DO: durch die games und filme/shortfilms iterieren 
-// bei search abfrage, ob character schon geladen wurde
-// push ins Array
+// bei search abfrage das dataAllcharacters filtern, nicht den charcter fetchen
 // loading spinner
 // back to home button
