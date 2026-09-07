@@ -40,7 +40,7 @@ function renderDisneyCharacters(dataList){
         const character = dataList[characterIndex];
         html += displayCharacterCard(character); //jedes html einmal rechnen und dann nächstes im array datalist
     }
-    list.innerHTML = html; //zum schluss die komplette liste anzeigen lassen , sonst sehr langsam 
+    list.innerHTML += html; //zum schluss die komplette liste anzeigen lassen , sonst sehr langsam 
 }
 
 function displayLoadMoreBtn(){
@@ -68,12 +68,13 @@ function displayCharacterCard(character){
         <h2>${characterName}</h2>
         <p>${_id}</p>
         <div class="card-img-wrapper">
-        <img src="${imageUrl}" alt="${characterName}" loading="lazy">
+        <img src="${imageUrl}" alt="${characterName}" loading="lazy">^
         </div>
         <div class="card-info">
-        <p>Films: ${films || "unknown"}</p>
-        ${shortFilms ? `<p>Short Films: ${shortFilms}</p>` : ""} 
-        ${videoGames ? `<p>Video Games: ${videoGames}</p>` : ""}
+        ${films && films.length > 0 ? `<p><b>Films</b>: ${films}</p>` : `<p><b>Films</b>: unknown</p>`}
+        ${shortFilms && shortFilms.length > 0 ? `<p><b>Short Films </b>: ${shortFilms}</p>` :  `<p><b>Short Films</b>: unknown</p>`}
+        ${videoGames && videoGames.length > 0 ? `<p><b>Video Games </b>: ${videoGames}</p>` : `<p><b>Video Games</b>: unknown</p>`}
+        </div>
         </li>`;
 }
 
