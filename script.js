@@ -4,11 +4,17 @@ let pageNumber = 1;
 let allCharacters = [];
 
 function init(){
-    loadDisneyCharacters("character", pageNumber);
+    loadVisibleDisneyCharacters("character", pageNumber);
     loadAllCharacters();
 }
 
-async function loadDisneyCharacters(extension, pageNumber) {
+/**
+ * This function loads the characters of a page 
+ * @param {string} extension  - This is the extension of the Base URL  
+ * @param {number} pageNumber - This is the page number to load
+ */
+
+async function loadVisibleDisneyCharacters(extension, pageNumber) {
     try {
         const response = await fetch(BASE_URL + extension + "?page=" + pageNumber);
         const data = await response.json();
@@ -21,23 +27,30 @@ async function loadDisneyCharacters(extension, pageNumber) {
     }
 }
 
+const errorSection = document.getElementById("error-message");
+
 function displayError(errorMessage){
-    const main = document.querySelector("main");
-    main.innerHTML = `<p class="error-message">${errorMessage}</p>`
+    errorSection.innerHTML = `<p class="error-message">${errorMessage}</p>`
 }
 
 function renderDisneyCharacters(dataList){
     const list = document.getElementById("character-list");
+    let html = ""; 
     for (let characterIndex = 0; characterIndex < dataList.length; characterIndex++) {
         const character = dataList[characterIndex];
-        list.innerHTML += displayCharacterCard(character);
-    } 
+        html += displayCharacterCard(character); //jedes html einmal rechnen und dann nächstes im array datalist
+    }
+    list.innerHTML = html; //zum schluss die komplette liste anzeigen lassen , sonst sehr langsam 
 }
 
 function displayLoadMoreBtn(){
     loadMoreBtnContainer.innerHTML = `<button class="load-more-btn" id="load-more-btn">Show me more!</button>`
     const loadMoreBtn = document.getElementById("load-more-btn");
     loadMoreBtn.addEventListener("click",loadMoreCharacters);
+}
+
+function hideLoadMoreButton(){
+    loadMoreBtnContainer.innerHTML = "";
 }
 
 function displayCharacterCard(character){
@@ -57,6 +70,7 @@ function displayCharacterCard(character){
         <div class="card-img-wrapper">
         <img src="${imageUrl}" alt="${characterName}" loading="lazy">
         </div>
+        <div class="card-info">
         <p>Films: ${films || "unknown"}</p>
         ${shortFilms ? `<p>Short Films: ${shortFilms}</p>` : ""} 
         ${videoGames ? `<p>Video Games: ${videoGames}</p>` : ""}
@@ -67,8 +81,6 @@ async function loadAllCharacters(){
     const responseAllCharacters = await fetch(BASE_URL + "character?pageSize=10000");
     const dataAllCharacters = await responseAllCharacters.json();
     allCharacters = dataAllCharacters.data;
-    console.log("ANzahl geladen:" , allCharacters.length);
-    console.log(dataAllCharacters.info);
 }
 
 function searchCharacter(){
@@ -76,7 +88,13 @@ function searchCharacter(){
     const trueInputValue = inputFieldValue.toLowerCase().trim();
     const list = document.getElementById("character-list");
     list.innerHTML = "";
-    loadDisneyCharacters("character"+"?name="+trueInputValue);
+    hideLoadMoreButton();
+    let searchedCharacters = allCharacters.filter(character => character.name.toLowerCase().includes(trueInputValue));
+    if(searchedCharacters.length === 0) {
+        errorSection.innerHTML = `<p class="error-message">No characters found.</p>`;
+    } else {
+        renderDisneyCharacters(searchedCharacters);
+    }
 }
 
 function loadMoreCharacters(){
@@ -84,11 +102,10 @@ function loadMoreCharacters(){
     //if (pageNumber > 149) {pageNumber = 1};   alte Version, besser mit ternary Operator:
     pageNumber = pageNumber >= 149 ? 1 : pageNumber +1 ; // Weil die Prüfung jetzt vor statt nach dem Hochzählen passiert, 
     // muss die Grenze im Vergleich um eins nach vorne verschoben werden (>  wird zu >=), damit das Verhalten gleich bleibt.
-    loadDisneyCharacters("character", pageNumber);
+    loadVisibleDisneyCharacters("character", pageNumber);
 }
 
 
 // TO DO: durch die games und filme/shortfilms iterieren 
-// bei search abfrage das dataAllcharacters filtern, nicht den charcter fetchen
 // loading spinner
 // back to home button
