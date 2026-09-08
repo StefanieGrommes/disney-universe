@@ -20,7 +20,7 @@ async function loadVisibleDisneyCharacters(extension, pageNumber) {
         const data = await response.json();
         const dataList = data.data;
         renderDisneyCharacters(dataList);
-        displayLoadMoreBtn();
+        await waitForData();
     } catch (error) {
         console.error(error);
         displayError("Es ist ein Fehler beim Laden aufgetreten. Bitte versuche es später erneut!");
@@ -43,6 +43,17 @@ function renderDisneyCharacters(dataList){
     list.innerHTML += html; //zum schluss die komplette liste anzeigen lassen , sonst sehr langsam 
 }
 
+async function waitForData(){
+    const images = document.querySelectorAll(".character-card img ");
+    for (let i = 0; i < images.length; i++) {
+        if (!images[i].complete) {
+            await images[i].decode();
+        }
+    }
+    hideLoadingSpinner();
+    displayLoadMoreBtn();
+}
+
 function displayLoadMoreBtn(){
     loadMoreBtnContainer.innerHTML = `<button class="load-more-btn" id="load-more-btn">Show me more!</button>`
     const loadMoreBtn = document.getElementById("load-more-btn");
@@ -51,6 +62,20 @@ function displayLoadMoreBtn(){
 
 function hideLoadMoreButton(){
     loadMoreBtnContainer.innerHTML = "";
+}
+
+const loadingSpinner = document.getElementById("loading-spinner");
+
+function showLoadingSpinner(){
+    if (loadingSpinner) {
+        loadingSpinner.style.display = "block";
+    }
+}
+
+function hideLoadingSpinner(){
+    if (loadingSpinner) {
+        loadingSpinner.style.display = "none";
+    }
 }
 
 function displayCharacterCard(character){
@@ -65,17 +90,19 @@ function displayCharacterCard(character){
         _id,
     } = character
     return `<li class="character-card">
+        <div class="card-headline">
         <h2>${characterName}</h2>
+        </div>
         <p>${_id}</p>
         <div class="card-img-wrapper">
-        <img src="${imageUrl}" alt="${characterName}" loading="lazy">^
+        <img src="${imageUrl}" alt="${characterName}" loading="lazy">
         </div>
         <div class="card-info">
-        ${films && films.length > 0 ? `<p><b>Films</b>: ${films}</p>` : `<p><b>Films</b>: unknown</p>`}
-        ${shortFilms && shortFilms.length > 0 ? `<p><b>Short Films </b>: ${shortFilms}</p>` :  `<p><b>Short Films</b>: unknown</p>`}
-        ${videoGames && videoGames.length > 0 ? `<p><b>Video Games </b>: ${videoGames}</p>` : `<p><b>Video Games</b>: unknown</p>`}
+        ${films && films.length > 0 ? `<ul><b>Films</b>: ${films.join(", ")}</ul>` : `<ul><b>Films</b>: unknown</ul>`}
+        ${shortFilms && shortFilms.length > 0 ? `<ul><b>Short Films </b>: ${shortFilms.join(", ")}</ul>` :  `<ul><b>Short Films</b>: unknown</ul>`}
+        ${videoGames && videoGames.length > 0 ? `<ul><b>Video Games </b>: ${videoGames.join(", ")}</ul>` : `<ul><b>Video Games</b>: unknown</ul>`}
         </div>
-        </li>`;
+        </li>`; 
 }
 
 async function loadAllCharacters(){
@@ -99,6 +126,7 @@ function searchCharacter(){
 }
 
 function loadMoreCharacters(){
+    showLoadingSpinner();
     //pageNumber++;
     //if (pageNumber > 149) {pageNumber = 1};   alte Version, besser mit ternary Operator:
     pageNumber = pageNumber >= 149 ? 1 : pageNumber +1 ; // Weil die Prüfung jetzt vor statt nach dem Hochzählen passiert, 
@@ -107,6 +135,5 @@ function loadMoreCharacters(){
 }
 
 
-// TO DO: durch die games und filme/shortfilms iterieren 
-// loading spinner
+// no found iMG 
 // back to home button
