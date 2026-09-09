@@ -47,7 +47,11 @@ async function waitForData(){
     const images = document.querySelectorAll(".character-card img ");
     for (let i = 0; i < images.length; i++) {
         if (!images[i].complete) {
+            try {
             await images[i].decode();
+            } catch (error) {
+                console.warn ("Folgendes Bild konnte nicht geladen werden:", images[i].src);
+            }
         }
     }
     hideLoadingSpinner();
@@ -60,7 +64,7 @@ function displayLoadMoreBtn(){
     loadMoreBtn.addEventListener("click",loadMoreCharacters);
 }
 
-function hideLoadMoreButton(){
+function clearButtonContainer(){
     loadMoreBtnContainer.innerHTML = "";
 }
 
@@ -81,6 +85,7 @@ function hideLoadingSpinner(){
 function displayCharacterCard(character){
     // destructuring => anstatt von const name = specie.name
     //                                const height = specie[average_height] usw  alles zusammen definieren//
+    // onerror="this.src=``" wenn bild nicht geladen werden kann, dann gibt es folgendes Fallback, this bezieht sich auf img-Element
     const {
         name: characterName,
         films,
@@ -95,7 +100,7 @@ function displayCharacterCard(character){
         </div>
         <p>${_id}</p>
         <div class="card-img-wrapper">
-        <img src="${imageUrl}" alt="${characterName}" loading="lazy">
+        <img src="${imageUrl || "./assets/the_shire_hobbit-mike-wazowski-6739521_640.png"}" alt="${characterName}" loading="lazy" onerror="this.src='./assets/the_shire_hobbit-mike-wazowski-6739521_640.png';"> 
         </div>
         <div class="card-info">
         ${films && films.length > 0 ? `<ul><b>Films</b>: ${films.join(", ")}</ul>` : `<ul><b>Films</b>: unknown</ul>`}
@@ -112,17 +117,41 @@ async function loadAllCharacters(){
 }
 
 function searchCharacter(){
-    const inputFieldValue = document.getElementById("search-input-field").value;
-    const trueInputValue = inputFieldValue.toLowerCase().trim();
+    const inputField = document.getElementById("search-input-field");
+    const trueInputValue = inputField.value.toLowerCase().trim();
     const list = document.getElementById("character-list");
     list.innerHTML = "";
-    hideLoadMoreButton();
+    clearButtonContainer();
     let searchedCharacters = allCharacters.filter(character => character.name.toLowerCase().includes(trueInputValue));
     if(searchedCharacters.length === 0) {
         errorSection.innerHTML = `<p class="error-message">No characters found.</p>`;
     } else {
         renderDisneyCharacters(searchedCharacters);
     }
+    inputField.value = "";
+    showBacktoStartBtn();
+}
+
+function showBacktoStartBtn(){
+    loadMoreBtnContainer.innerHTML = `<button class="back-to-start-btn" id="back-to-start-btn">Back to Start</button>`
+    const backToStartBtn = document.getElementById("back-to-start-btn");
+    backToStartBtn.addEventListener("click", reset);
+    hideLoadingSpinner();
+}
+
+function reset(){
+    clearList();
+    clearButtonContainer();
+    hideErrorMessage();
+    loadVisibleDisneyCharacters("character", pageNumber);
+}
+
+function clearList(){
+    document.getElementById("character-list").innerHTML = "";
+}
+
+function hideErrorMessage(){
+    errorSection.innerHTML = "";
 }
 
 function loadMoreCharacters(){
@@ -133,7 +162,3 @@ function loadMoreCharacters(){
     // muss die Grenze im Vergleich um eins nach vorne verschoben werden (>  wird zu >=), damit das Verhalten gleich bleibt.
     loadVisibleDisneyCharacters("character", pageNumber);
 }
-
-
-// no found iMG 
-// back to home button

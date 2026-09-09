@@ -51,7 +51,7 @@ header img {
     padding: 4px;
 }
 
-.load-more-btn {    
+.load-more-btn, .back-to-start-btn {    
     margin-top: 12px;
 }
 
@@ -85,7 +85,15 @@ ul {
 }
 
 .loading-spinner-img {
-    filter: invert (100%);
+    width: 20rem;
+    height: 20rem;
+    animation: loader 1.25s infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes loader {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .character-list {
