@@ -44,15 +44,25 @@ header img {
 
 .submit-search-btn {
    height: 100%; 
+   font-size: 16px;
+   cursor: pointer;
 }
 
 .search-input-field {
-    width: 220px;
+    width: 260px;
     padding: 4px;
+    font-size: 18px;
+}
+
+#load-more-btn-container {
+    display: flex;
+    justify-content: center;
 }
 
 .load-more-btn, .back-to-start-btn {    
     margin-top: 12px;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 main {  
@@ -85,8 +95,8 @@ ul {
 }
 
 .loading-spinner-img {
-    width: 20rem;
-    height: 20rem;
+    width: 16rem;
+    height: 26rem;
     animation: loader 1.25s infinite;
     animation-timing-function: linear;
 }
@@ -101,7 +111,7 @@ ul {
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* erzeuge so viele spalten mit max 220px wie möglich  */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* erzeuge so viele spalten mit max 150px wie möglich  */
     gap: 1.5rem;
 }
 
@@ -142,8 +152,8 @@ ul {
     color: #cfcfcf;
 }
 
-.card-h2-and-id {
-    height: 76px;
+.card-headline {
+    height: 64px;
 }
 
 .character-card.expanded .card-info {
@@ -153,6 +163,8 @@ ul {
 
 .expand-btn {
     visibility: hidden;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .card-img-wrapper {
@@ -172,7 +184,7 @@ ul {
     justify-content: start;
     flex: 1;
     width: 100%;
-    max-height: 104px;
+    max-height: 116px;
     overflow: hidden;
 }
 
@@ -206,6 +218,7 @@ footer {
 
 footer a {
     text-decoration: none;
+    cursor: pointer;
     color: white;
 }
 
@@ -220,4 +233,12 @@ footer p {
 footer img {
     height: 100%;
     object-fit: cover;
+}
+
+/* ------->RESPONSIVE DESIGN------------------------------*/
+@media screen and (max-width: 1400px) {
+    .character-list {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+    
 }

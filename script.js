@@ -99,25 +99,33 @@ function displayCharacterCard(character){
         _id,
     } = character
     return `<li class="character-card" id="card-${_id}">
-        <div class="card-h2-and-id">
+        <div class="card-headline">
         <h2>${characterName}</h2>
-        <p>${_id}</p>
         </div>
         <div class="card-img-wrapper">
-        <img src="${imageUrl || "./assets/the_shire_hobbit-mike-wazowski-6739521_640.png"}" alt="${characterName}" loading="lazy" onerror="this.src='./assets/the_shire_hobbit-mike-wazowski-6739521_640.png';"> 
+        <img src="${imageUrl || "./assets/clker-free-vector-images-mickey-311577.svg"}" alt="${characterName}" loading="lazy" onerror="handleImageError(this)"> 
         </div>
+        ${!imageUrl ? '<p class="img-error">Image not available</p>' : ''}
         <div class="card-info">
         ${buildInfoList(character)}
         </div>
-        <button class="expand-btn" onclick="toggleCard('card-${_id}')">Mehr anzeigen</button>
+        <button class="expand-btn" onclick="toggleCard('card-${_id}')">Display more</button>
         </li>`; 
+}
+
+function handleImageError(imgElement){
+    imgElement.src ='./assets/clker-free-vector-images-mickey-311577.svg';
+    if (!imgElement.dataset.errorHandled) {
+        imgElement.insertAdjacentHTML('afterend', '<p><i>Image not available</i></p>');
+        imgElement.dataset.errorHandled = true;
+    }
 }
 
 function toggleCard(cardId){
     const expandedCard = document.getElementById(cardId);
     expandedCard.classList.toggle("expanded");
     const expandBtn = expandedCard.querySelector(".expand-btn");
-    expandBtn.innerText = expandedCard.classList.contains("expanded") ? "Weniger anzeigen" : "Mehr anzeigen";
+    expandBtn.innerText = expandedCard.classList.contains("expanded") ? "Display less" : "Display more";
 }
 
 function buildInfoList(character){
